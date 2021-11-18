@@ -18,14 +18,6 @@ class Sku_item(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=False, related_name='brands')
     category = models.ForeignKey(Category,  on_delete=models.CASCADE, null=False, related_name='brands')
 
-class Items(models.Model):
-    id = models.AutoField(primary_key=True)
-    gross = models.FloatField()
-    discounts = models.FloatField()
-    subtotal = models.FloatField()
-    tax = models.FloatField()
-    total = models.FloatField()
-    sku = models.ForeignKey(Sku_item, on_delete=models.CASCADE, null=False, related_name='sku_items')
 
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
@@ -37,8 +29,20 @@ class Customer(models.Model):
     address = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
 
+    def __str__(self):
+        return self.first_name
+
 class Invoice(models.Model):
     id = models.AutoField(primary_key=True)
     createtime = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False, related_name='customers')
-    item = models.ForeignKey(Items, on_delete=models.CASCADE, null=False, related_name='items_product')
+
+class Items(models.Model):
+    id = models.AutoField(primary_key=True)
+    gross = models.FloatField()
+    discounts = models.FloatField()
+    subtotal = models.FloatField()
+    tax = models.FloatField()
+    total = models.FloatField()
+    sku = models.ForeignKey(Sku_item, on_delete=models.CASCADE, null=False, related_name='sku_items')
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, null=False, related_name='invoices')
