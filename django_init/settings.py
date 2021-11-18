@@ -38,9 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'aplicaciones.facturacion',
+    'aplicaciones.apiinvoice',
+    'aplicaciones.api',
 
 ]
+
+SWAGGER_SETTINGS = {
+    'DOC_EXPANSION': 'none'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_init.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -85,7 +91,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'macronegocios',
+        'NAME': 'macronegociossa',
         'USER': 'dba',
         'PASSWORD': 'dba2021',
         'HOST': 'localhost',
