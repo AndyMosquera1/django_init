@@ -8,6 +8,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = '__all__'
 
+
 class InvoiceSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer()
 
@@ -15,23 +16,27 @@ class InvoiceSerializer(serializers.ModelSerializer):
         model = Invoice
         fields = '__all__'
 
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = '__all__'
+
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
         fields = '__all__'
 
+
 class SkuSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
-    brand  = BrandSerializer()
+    brand = BrandSerializer()
 
     class Meta:
         model = Sku
         fields = '__all__'
+
 
 class ItemsSerializer(serializers.ModelSerializer):
     sku = SkuSerializer()
