@@ -19,9 +19,16 @@ from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from rest_framework.routers import DefaultRouter
 
-from aplicaciones import apiinvoice
-from aplicaciones.api.views import InvoiceList
+from aplicaciones.api import views
+from aplicaciones.api.views import api_invoice
+
+router=DefaultRouter()
+router.register("Invoice",views.Invoiceapi)
+router.register("Customer",views.Customerapi)
+router.register("Items",views.Itemsapi)
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,5 +47,6 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
-    path('api/invoices/', InvoiceList.as_view(), name='invoice_list'),
+    path('invoices/',api_invoice),
+    path('', include(router.urls)),
 ]
