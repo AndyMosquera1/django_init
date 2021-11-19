@@ -22,7 +22,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
 from aplicaciones.api import views
-from aplicaciones.api.views import api_invoice
+from aplicaciones.api.views import api_invoice, api_create_invoice
 
 router=DefaultRouter()
 router.register("Invoice",views.Invoiceapi)
@@ -48,5 +48,6 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
     path('invoices/',api_invoice),
+    path('create/invoice/',api_create_invoice),
     path('', include(router.urls)),
 ]
