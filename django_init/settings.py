@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'aplicaciones.facturacion',
-    'aplicaciones.apiinvoice',
     'aplicaciones.api',
 
 ]
@@ -91,9 +90,9 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'macronegociossa',
-        'USER': 'dba',
-        'PASSWORD': 'dba2021',
+        'NAME': 'macronegocios',
+        'USER': 'postgres',
+        'PASSWORD': 'Andy_090696',
         'HOST': 'localhost',
         'PORT': '',
 
