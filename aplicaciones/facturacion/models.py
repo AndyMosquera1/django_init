@@ -10,13 +10,13 @@ class Brand(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
-class Sku_item(models.Model):
+class Sku(models.Model):
     id = models.AutoField(primary_key=True)
     reference = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     price = models.FloatField(max_length=100)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, null=False, related_name='brands')
-    category = models.ForeignKey(Category,  on_delete=models.CASCADE, null=False, related_name='brands')
+    category = models.ForeignKey(Category,  on_delete=models.CASCADE, null=False, related_name='categorys')
 
 
 class Customer(models.Model):
@@ -44,5 +44,5 @@ class Items(models.Model):
     subtotal = models.FloatField()
     tax = models.FloatField()
     total = models.FloatField()
-    sku = models.ForeignKey(Sku_item, on_delete=models.CASCADE, null=False, related_name='sku_items')
+    sku = models.ForeignKey(Sku, on_delete=models.CASCADE, null=False, related_name='sku_items')
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, null=False, related_name='invoices')
