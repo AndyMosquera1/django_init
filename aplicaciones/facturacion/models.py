@@ -37,6 +37,8 @@ class Invoice(models.Model):
     createtime = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False, related_name='customers')
 
+    class Meta:
+        db_table = 'facturacion_invoice'
 class Items(models.Model):
     id = models.AutoField(primary_key=True)
     gross = models.FloatField()
