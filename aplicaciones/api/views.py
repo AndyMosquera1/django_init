@@ -16,29 +16,36 @@ from aplicaciones.facturacion.models import Invoice, Customer, Items
 
 @api_view(['GET'])
 def api_invoice(request):
-    queryset = Invoice.objects.all()
+    id_params =  request.GET.get('id')
+    queryset = ''
+    if id_params != None:
+        queryset = Invoice.objects.filter(id=id_params)
+    else:
+        queryset = Invoice.objects.all()
+
     serializer_class = InvoiceSerializer(queryset, many=True)
-    dicc = {'id': '','createtime': '','document_number': '','customer':'', 'items':'' }
+    dicc = {'id': '', 'createtime': '', 'document_number': '', 'customer': '', 'items': ''}
 
     for x in queryset:
         queryset_invoice = Invoice.objects.filter(id=x.id)
-        dicc['id']=x.id
-        dicc['createtime']=x.createtime
-        dicc['customer']= SerializaCustomer(x.customer_id)
+        dicc['id'] = x.id
+        dicc['createtime'] = x.createtime
+        dicc['customer'] = SerializaCustomer(x.customer_id)
         queryset_item = Items.objects.filter(invoice_id=x.id)
         dicc['items'] = ItemsSerializer(queryset_item, many=True).data
 
-
-    #dicc = {'api':serializer_class.data}
+    # dicc = {'api':serializer_class.data}
     return Response(dicc)
 
+
 def SerializaCustomer(id_customer):
-    response = CustomerSerializer(Customer.objects.filter(id=id_customer),many=True).data[0]
+    response = CustomerSerializer(Customer.objects.filter(id=id_customer), many=True).data[0]
     return response
+
+
 class Invoiceapi(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
-
 
 
 class Customerapi(viewsets.ModelViewSet):
