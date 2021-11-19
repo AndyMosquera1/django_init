@@ -11,12 +11,12 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 from aplicaciones.api.serializers import InvoiceSerializer, CustomerSerializer, ItemsSerializer
-from aplicaciones.facturacion.models import Invoice, Customer, Items
+from aplicaciones.facturacion.models import Invoice, Customer, Items, Category
 
 
 @api_view(['GET'])
 def api_invoice(request):
-    id_params =  request.GET.get('id')
+    id_params = request.GET.get('id')
     queryset = ''
     if id_params != None:
         queryset = Invoice.objects.filter(id=id_params)
@@ -38,10 +38,24 @@ def api_invoice(request):
     return Response(dicc)
 
 
+@api_view(['POST'])
+def api_create_invoice(request):
+    data = request.data
+    serializers = ItemsSerializer(data=data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(data)
+    else:
+        return Response(serializers.error_messages)
+
+
 def SerializaCustomer(id_customer):
     response = CustomerSerializer(Customer.objects.filter(id=id_customer), many=True).data[0]
     return response
 
+def ConsultCustomer(id):
+    queryset=Customer.objects.filter(id=id)
+    return queryset
 
 class Invoiceapi(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
