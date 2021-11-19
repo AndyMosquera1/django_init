@@ -1,14 +1,6 @@
-from django.core import serializers
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
-from rest_framework.utils import json
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-
-from django.db.models import Q
 
 from aplicaciones.api.serializers import InvoiceSerializer, CustomerSerializer, ItemsSerializer
 from aplicaciones.facturacion.models import Invoice, Customer, Items, Category
@@ -22,7 +14,6 @@ def api_invoice(request):
         queryset = Invoice.objects.filter(id=id_params)
     else:
         queryset = Invoice.objects.all()
-
     serializer_class = InvoiceSerializer(queryset, many=True)
     dicc = {'id': '', 'createtime': '', 'document_number': '', 'customer': '', 'items': ''}
 
@@ -34,7 +25,6 @@ def api_invoice(request):
         queryset_item = Items.objects.filter(invoice_id=x.id)
         dicc['items'] = ItemsSerializer(queryset_item, many=True).data
 
-    # dicc = {'api':serializer_class.data}
     return Response(dicc)
 
 
